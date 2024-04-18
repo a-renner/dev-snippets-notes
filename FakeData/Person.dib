@@ -1,0 +1,38 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Pessoa Física
+
+#!csharp
+
+#r "nuget:  Bogus"
+
+using Bogus;
+using Bogus.Extensions.Brazil;
+
+#!csharp
+
+public class Pessoa
+{
+    public string Nome { get; set; }
+    public int Idade { get; set; }
+    public string Genero { get; set; }
+    public string Email { get; set; }
+    public string Telefone { get; set; }
+    public string Cpf { get; set; }
+}
+
+var faker = new Faker<Pessoa>("pt_BR")
+    .RuleFor(p => p.Nome, f => f.Person.FullName)
+    .RuleFor(p => p.Idade, f => f.Person.Random.Number(18, 65))
+    .RuleFor(p => p.Genero, f => f.Person.Gender.ToString())
+    .RuleFor(p => p.Email, f => f.Person.Email)
+    .RuleFor(p => p.Telefone, f => f.Person.Phone)
+    .RuleFor(p => p.Cpf, f => f.Person.Cpf());
+
+var pessoas = faker.Generate(10);
+
+pessoas.DisplayTable<Pessoa>();
