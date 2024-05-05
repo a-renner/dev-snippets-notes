@@ -1,0 +1,37 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Pessoa Jurídica
+Gera dados de uma pessoa jurídica utilizando o Bogus.
+
+#!csharp
+
+#r "nuget:  Bogus"
+
+using Bogus;
+using Bogus.Extensions.Brazil;
+
+#!csharp
+
+public class Empresa
+{
+    public string Nome { get; set; }
+    public string Cnpj { get; set; }
+    public string Contato { get; set; }
+    public string Email { get; set; }
+    public string Telefone { get; set; }
+}
+
+var faker = new Faker<Empresa>("pt_BR")
+    .RuleFor(p => p.Nome, f => f.Company.CompanyName())
+    .RuleFor(p => p.Cnpj, f => f.Company.Cnpj())
+    .RuleFor(p => p.Contato, f => f.Person.FullName)
+    .RuleFor(p => p.Email, f => f.Internet.Email())
+    .RuleFor(p => p.Telefone, f => f.Person.Phone);
+
+var pessoas = faker.Generate(10);
+
+pessoas.DisplayTable<Empresa>();

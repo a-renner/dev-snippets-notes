@@ -1,0 +1,15 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!markdown
+
+# String base64 To Image
+
+#!csharp
+
+using Microsoft.DotNet.Interactive.Formatting;
+
+string base64String = "";
+
+display(PocketViewTags.img[src: "data:image/png;base64," + base64String])
